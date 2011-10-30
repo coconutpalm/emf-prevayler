@@ -35,7 +35,8 @@ Here's how this could work
 --------------------------
 
 All EMF objects are implemented using interfaces.  So we can proxy all
-object accesses pretty easily.
+object accesses pretty easily either by using dynamic proxies (for
+EObjects) or with the decorator pattern.
 
 Second, all EMF objects contained in a resource are easily addressable
 via a URI.  i.e.: Given an EMF Resource, and a URI to a contained
