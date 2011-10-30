@@ -63,8 +63,12 @@ them into Transactions (assume that they mutate state even if they
 don't), or possibly one could create a new naming convention to
 specify methods are should or should not be journalled.
 
-That's the idea anyway.  Anyone else interested in working on this,
-feel free to fork the repo and send merge requests. :-)
+Since we're snapshotting by serializing the EMF to XMI, we can use
+EMF's native tools for schema evolution.
+
+Sound cool?
+
+If you think so, please fork the repo and send merge requests. :-)
 
 
 License
