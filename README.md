@@ -12,10 +12,12 @@ If all this works out as well as I expect, the result will be that
 you'll be able to tell the library: "Connect this EMF resource and all
 it's contained objects to this directory over here", and then use your
 EMF objects just like usual.  And every change you make will
-automatically and transparently be persisted to the journal. 
+automatically and transparently be persisted.
 
-You Won't Have To Think About Getting Your Stuff Stored Anymore.  And
-since Prevayler journals every change, the worst case in a system
+Yes, You Won't Have To Think About Getting Your Stuff Stored/Retrieved
+Anymore.
+
+And since Prevayler journals every change, the worst case in a system
 crash is that you lose the last few changes if the disk wasn't flushed
 yet.
 
