@@ -14,10 +14,14 @@ it's contained objects to this directory over here", and then use your
 EMF objects just like usual.  And every change you make will
 automatically and transparently be persisted to the journal.
 
-There's also a configurable snapshot thread that will take a new
-snapshot as frequently (or not) as you desire and then clean up the
-stale journal files.  Or if you prefer you can turn this behavior off
-and handle this yourself.
+There will be a performance hit--not sure how much yet.  But I expect
+that for interactive systems, the bottleneck will be the speed of the
+human in front of the computer...
+
+There's also (already) a configurable snapshot thread that will take a
+new snapshot as frequently (or not) as you desire and then clean up
+the stale journal files.  Or if you prefer you can turn this behavior
+off and handle this yourself.
 
 
 Here's how this could work
