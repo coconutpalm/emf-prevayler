@@ -34,6 +34,10 @@ off and handle this yourself.
 Here's how this could work
 --------------------------
 
+Prevayler's basic idea is that you store system state by taking a
+snapshot, plus journalling all object mutations that happen after the
+snapshot.
+
 All EMF objects are implemented using interfaces.  So we can proxy all
 object accesses pretty easily either by using dynamic proxies (for
 EObjects) or with the decorator pattern.
@@ -45,13 +49,10 @@ resource.  This is a reasonable performance target and lets us simply
 and automatically avoid the [Prevalence
 Baptism problem](http://prevayler.org/apidocs/org/prevayler/Transaction.html).
 
-Prevayler's basic idea is that you store system state by taking a
-snapshot, plus journalling all object mutations that happen after the
-snapshot.
-
-Since we can proxy object accesses, we can automatically and
-transparently turn any object mutation operation into a Prevayler
-transaction that will be journaled.
+Since we can proxy object accesses, and we can easily find any random
+object in the EMF object graph starting at the root, we can
+automatically and transparently turn any object mutation operation
+into a Prevayler transaction that will be journaled.
 
 For EList and other containers, this is straightforward if a bit
 annoying to implement.
