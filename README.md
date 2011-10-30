@@ -68,7 +68,8 @@ EMF's native tools for schema evolution.
 
 Sound cool?
 
-If you think so, please fork the repo and send merge requests. :-)
+If you think so, please fork the repo and send merge requests as you
+extend / fix this. :-)
 
 
 License
