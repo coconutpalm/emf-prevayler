@@ -39,6 +39,9 @@ snapshot, then journal all object mutations that happen after the
 snapshot.  Then you repeat your snapshots as often as needed/desired
 and clean up stale journal files to keep things tidy.
 
+Snapshots are easy to handle in EMF by serializing to XMI.  Journaling
+changes can be handled as follows:
+
 All EMF objects are implemented using interfaces.  So we can proxy all
 object accesses pretty easily either by using dynamic proxies (for
 EObjects) or with the decorator pattern.
