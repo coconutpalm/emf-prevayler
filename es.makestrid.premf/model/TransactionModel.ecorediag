@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmi:id="_1MWlwAC8EeGBGrZnGXLNgA" type="EcoreTools" name="TransactionModel" measurementUnit="Pixel">
+  <children xmi:type="notation:Node" xmi:id="_11SOAAC8EeGBGrZnGXLNgA" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_11S1EAC8EeGBGrZnGXLNgA" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_11S1EQC8EeGBGrZnGXLNgA" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_GDKx4AC9EeGBGrZnGXLNgA" type="2001">
+        <element xmi:type="ecore:EAttribute" href="TransactionModel.ecore#//ChangeTransaction/type"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_GDKx4QC9EeGBGrZnGXLNgA"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_MsNicAC9EeGBGrZnGXLNgA" type="2001">
+        <element xmi:type="ecore:EAttribute" href="TransactionModel.ecore#//ChangeTransaction/change"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_MsNicQC9EeGBGrZnGXLNgA"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_11S1EgC8EeGBGrZnGXLNgA"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_11S1EwC8EeGBGrZnGXLNgA"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_11S1FAC8EeGBGrZnGXLNgA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_11S1FQC8EeGBGrZnGXLNgA" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_11S1FgC8EeGBGrZnGXLNgA"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_11S1FwC8EeGBGrZnGXLNgA"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_11S1GAC8EeGBGrZnGXLNgA"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_11SOAQC8EeGBGrZnGXLNgA" fontColor="4210752" fontName="Liberation Sans" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EClass" href="TransactionModel.ecore#//ChangeTransaction"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_11SOAgC8EeGBGrZnGXLNgA" x="120" y="96"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_7nmx8AC8EeGBGrZnGXLNgA" type="1005">
+    <children xmi:type="notation:Node" xmi:id="_7noAEAC8EeGBGrZnGXLNgA" type="4010"/>
+    <children xmi:type="notation:Node" xmi:id="_7noAEQC8EeGBGrZnGXLNgA" type="5008">
+      <children xmi:type="notation:Node" xmi:id="_BOQRYAC9EeGBGrZnGXLNgA" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="TransactionModel.ecore#//TransactionType/SureTransactionWithQuery"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_BOQRYQC9EeGBGrZnGXLNgA"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_DTFP4AC9EeGBGrZnGXLNgA" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="TransactionModel.ecore#//TransactionType/Transaction"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_DTFP4QC9EeGBGrZnGXLNgA"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_EQbo8AC9EeGBGrZnGXLNgA" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="TransactionModel.ecore#//TransactionType/TransactionWithQuery"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_EQbo8QC9EeGBGrZnGXLNgA"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_7noAEgC8EeGBGrZnGXLNgA"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_7noAEwC8EeGBGrZnGXLNgA"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_7noAFAC8EeGBGrZnGXLNgA"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_7nmx8QC8EeGBGrZnGXLNgA" fontColor="4210752" fontName="Liberation Sans" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EEnum" href="TransactionModel.ecore#//TransactionType"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7nmx8gC8EeGBGrZnGXLNgA" x="120" y="204"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_S4qdoAC9EeGBGrZnGXLNgA" type="1004">
+    <children xmi:type="notation:Node" xmi:id="_S4rrwAC9EeGBGrZnGXLNgA" type="4008"/>
+    <children xmi:type="notation:Node" xmi:id="_S4sS0AC9EeGBGrZnGXLNgA" type="4009"/>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_S4rEsAC9EeGBGrZnGXLNgA" fontColor="4210752" fontName="Liberation Sans" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EDataType" href="TransactionModel.ecore#//ChangeDescription"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_S4rEsQC9EeGBGrZnGXLNgA" x="12" y="336"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_1MWlwQC8EeGBGrZnGXLNgA"/>
+  <element xmi:type="ecore:EPackage" href="TransactionModel.ecore#/"/>
+</notation:Diagram>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/es.makestrid.premf/src"
+    modelPluginID="es.makestrid.premf" modelName="TransactionModel" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>TransactionModel.ecore</foreignModel>
+  <genPackages prefix="Transactionmodel" disposableProviderFactory="true" ecorePackage="TransactionModel.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="TransactionModel.ecore#//TransactionType">
+      <genEnumLiterals ecoreEnumLiteral="TransactionModel.ecore#//TransactionType/SureTransactionWithQuery"/>
+      <genEnumLiterals ecoreEnumLiteral="TransactionModel.ecore#//TransactionType/Transaction"/>
+      <genEnumLiterals ecoreEnumLiteral="TransactionModel.ecore#//TransactionType/TransactionWithQuery"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="TransactionModel.ecore#//ChangeDescription"/>
+    <genClasses ecoreClass="TransactionModel.ecore#//ChangeTransaction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TransactionModel.ecore#//ChangeTransaction/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TransactionModel.ecore#//ChangeTransaction/change"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

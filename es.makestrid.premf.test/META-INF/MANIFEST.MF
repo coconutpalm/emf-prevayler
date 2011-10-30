@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test
+Bundle-SymbolicName: es.makestrid.premf.test
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: es.makestrid.premf;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
