@@ -35,7 +35,7 @@ Here's how this could work
 --------------------------
 
 Prevayler's basic idea is that you store system state by taking a
-snapshot, plus journalling all object mutations that happen after the
+snapshot, then journal all object mutations that happen after the
 snapshot.  Then you repeat your snapshots as often as needed/desired
 and clean up stale journal files to keep things tidy.
 
