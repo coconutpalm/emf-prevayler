@@ -4,8 +4,24 @@ EMF-Prevayler
 This is an experimental project to implement transparent persistence
 for EMF using Prevayler as a back end.
 
-Here's the basic idea
----------------------
+
+End goal
+========
+
+If all this works out as well as I expect, the result will be that
+you'll be able to tell the library: "Connect this EMF resource and all
+it's contained objects to this directory over here", and then use your
+EMF objects just like usual.  And every change you make will
+automatically and transparently be persisted to the journal.
+
+There's also a configurable snapshot thread that will take a new
+snapshot as frequently (or not) as you desire and then clean up the
+stale journal files.  Or if you prefer you can turn this behavior off
+and handle this yourself.
+
+
+Here's how this could work
+--------------------------
 
 All EMF objects are implemented using interfaces.  So we can proxy all
 object accesses pretty easily.
@@ -37,20 +53,6 @@ specify methods are should or should not be journalled.
 
 That's the idea anyway.  Anyone else interested in working on this,
 feel free to fork the repo and send merge requests. :-)
-
-Result
-======
-
-If all this works out as well as I expect, the result will be that
-you'll be able to tell the library: "Connect this EMF resource and all
-it's contained objects to this directory over here", and then use your
-EMF objects just like usual.  And every change you make will
-automatically and transparently be persisted to the journal.
-
-There's also a configurable snapshot thread that will take a new
-snapshot as frequently (or not) as you desire and then clean up the
-stale journal files.  Or if you prefer you can turn this behavior off
-and handle this yourself.
 
 
 License
