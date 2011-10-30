@@ -38,8 +38,10 @@ object accesses pretty easily.
 Second, all EMF objects contained in a resource are easily addressable
 via a URI.  i.e.: Given an EMF Resource, and a URI to a contained
 object, it is an average O(log n) operation to find that contained
-resource.  This is reasonable and lets us simply and automatically
-avoid the "Prevalence Baptism" problem.
+resource.  This is a reasonable performance target and lets us simply
+and automatically avoid the [Prevalence
+Baptism](http://prevayler.org/apidocs/org/prevayler/Transaction.html)
+problem.
 
 Prevayler's basic idea is that you store system state by taking a
 snapshot, plus journalling all object mutations that happen after the
