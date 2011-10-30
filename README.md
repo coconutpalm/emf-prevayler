@@ -14,7 +14,10 @@ it's contained objects to this directory over here", and then use your
 EMF objects just like usual.  And every change you make will
 automatically and transparently be persisted to the journal. 
 
-You Won't Have To Think About Getting Your Stuff Stored Anymore.
+You Won't Have To Think About Getting Your Stuff Stored Anymore.  And
+since Prevayler journals every change, the worst case in a system
+crash is that you lose the last few changes if the disk wasn't flushed
+yet.
 
 There will be a performance hit--not sure how much yet.  But I expect
 that for interactive systems, the bottleneck will be the speed of the
