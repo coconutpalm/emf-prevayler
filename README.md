@@ -12,7 +12,9 @@ If all this works out as well as I expect, the result will be that
 you'll be able to tell the library: "Connect this EMF resource and all
 it's contained objects to this directory over here", and then use your
 EMF objects just like usual.  And every change you make will
-automatically and transparently be persisted to the journal.
+automatically and transparently be persisted to the journal. 
+
+You Won't Have To Think About Getting Your Stuff Stored Anymore.
 
 There will be a performance hit--not sure how much yet.  But I expect
 that for interactive systems, the bottleneck will be the speed of the
