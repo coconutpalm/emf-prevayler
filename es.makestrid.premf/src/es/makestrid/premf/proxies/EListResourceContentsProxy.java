@@ -1,5 +1,6 @@
 package es.makestrid.premf.proxies;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
@@ -23,26 +24,48 @@ public class EListResourceContentsProxy<T> extends EListProxy<T> {
 			Resource root) {
 		super(delegate, prevayler, root);
 	}
+	
+	private static class Add implements SureTransactionWithQuery {
+		private static final long serialVersionUID = -8239859788533098090L;
+		private transient EObject toAdd;
+		private String toAddSerialized;
+		
+		public Add(EObject toAdd) {
+			this.toAdd = toAdd;
+			toAddSerialized = serialize(toAdd);
+		}
+		
+		@Override
+		public Object executeAndQuery(Object prevalentSystem, Date executionTime) {
+			Resource system = (Resource) prevalentSystem;
+			if (null == toAdd) {
+				toAdd = deserialize(toAddSerialized);
+			}
+			system.getContents().add(toAdd);
+			return true;
+		}
+	}
 
 	@Override
 	public boolean add(T object) {
-		final EObject toAdd = (EObject) object;
-		SureTransactionWithQuery transaction = new SureTransactionWithQuery() {
-			private static final long serialVersionUID = -3792271133280132542L;
-			private String toAddString = serialize(toAdd);
-			@Override
-			public Object executeAndQuery(Object prevalentSystem, Date executionTime) {
-				EObject toAdd2 = deserialize(toAddString);
-				Resource system = (Resource) prevalentSystem;
-				if (EcoreUtil.equals(toAdd2, toAdd)) {
-					system.getContents().add(toAdd);
-				} else {
-					system.getContents().add(toAdd2);
-				}
-				return true;
-			}
-		};
-		boolean result = (Boolean) getPrevayler().execute(transaction);
+//		SureTransactionWithQuery transaction = new SureTransactionWithQuery() {
+//			private static final long serialVersionUID = -3792271133280132542L;
+//			private String toAddString = serialize(toAdd);
+//			@Override
+//			public Object executeAndQuery(Object prevalentSystem, Date executionTime) {
+//				EObject toAdd2 = deserialize(toAddString);
+//				Resource system = (Resource) prevalentSystem;
+//				if (EcoreUtil.equals(toAdd2, toAdd)) {
+//					system.getContents().add(toAdd);
+//				} else {
+//					system.getContents().add(toAdd2);
+//				}
+//				return true;
+//			}
+//		};
+		
+		EObject toAdd = (EObject) object;
+		boolean result = (Boolean) getPrevayler().execute(new Add(toAdd));
 		return result;
 	}
 

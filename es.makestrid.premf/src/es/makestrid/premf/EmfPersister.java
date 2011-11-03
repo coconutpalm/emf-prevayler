@@ -13,7 +13,7 @@ import es.makestrid.premf.proxies.ResourceProxy;
 
 
 public class EmfPersister {
-	private static final String SNAPSHOT_SUFFIX = "xmi";
+	private static final String SNAPSHOT_SUFFIX = "xmiSnapshot";
 	private static final String SNAPSHOT_EXTENSION = "." + SNAPSHOT_SUFFIX;
 	private static final String JOURNAL_SUFFIX = "journal";
 	private static final String JOURNAL_EXTENSION = "." + JOURNAL_SUFFIX;
@@ -25,10 +25,11 @@ public class EmfPersister {
 
 	public EmfPersister(Resource systemRoot, String persistenceDir, int snapshotPeriodMinutes) {
 		this.persistenceDir = persistenceDir;
+		
 		data = (ResourceProxy) ResourceProxy.wrap(systemRoot);
 		
         PrevaylerFactory factory = new PrevaylerFactory();
-		factory.configurePrevalentSystem(data);
+		factory.configurePrevalentSystem(systemRoot);
         factory.configureTransactionFiltering(false);
         factory.configureSnapshotSerializer(SNAPSHOT_SUFFIX, new EMFSnapshotSerializer());
         factory.configurePrevalenceDirectory(persistenceDir);
@@ -37,6 +38,7 @@ public class EmfPersister {
 		} catch (Exception e) {
 			throw new RuntimeException("Unexpected exception creating Prevayler", e);
 		}
+        data.setPrevayler(prevayler);
         
         if (snapshotPeriodMinutes > 0) {
 	        snapshotThread = new SnapshotThread(prevayler, persistenceDir, snapshotPeriodMinutes);
@@ -48,8 +50,13 @@ public class EmfPersister {
 		return data;
 	}
 	
+	public Prevayler getPrevayler() {
+		return prevayler;
+	}
+	
 	public void snapshot() throws IOException {
 		prevayler.takeSnapshot();
+		cleanupJournalFiles();
 	}
 	
 	public void close() {
