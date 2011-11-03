@@ -45,25 +45,8 @@ public class EListResourceContentsProxy<T> extends EListProxy<T> {
 			return true;
 		}
 	}
-
 	@Override
 	public boolean add(T object) {
-//		SureTransactionWithQuery transaction = new SureTransactionWithQuery() {
-//			private static final long serialVersionUID = -3792271133280132542L;
-//			private String toAddString = serialize(toAdd);
-//			@Override
-//			public Object executeAndQuery(Object prevalentSystem, Date executionTime) {
-//				EObject toAdd2 = deserialize(toAddString);
-//				Resource system = (Resource) prevalentSystem;
-//				if (EcoreUtil.equals(toAdd2, toAdd)) {
-//					system.getContents().add(toAdd);
-//				} else {
-//					system.getContents().add(toAdd2);
-//				}
-//				return true;
-//			}
-//		};
-		
 		EObject toAdd = (EObject) object;
 		boolean result = (Boolean) getPrevayler().execute(new Add(toAdd));
 		return result;
