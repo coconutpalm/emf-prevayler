@@ -4,13 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.prevayler.Prevayler;
 import org.prevayler.PrevaylerFactory;
 
-import es.makestrid.premf.internal.EMFJournalSerializer;
 import es.makestrid.premf.internal.EMFSnapshotSerializer;
 import es.makestrid.premf.proxies.ResourceProxy;
 
@@ -34,7 +31,6 @@ public class EmfPersister {
 		factory.configurePrevalentSystem(data);
         factory.configureTransactionFiltering(false);
         factory.configureSnapshotSerializer(SNAPSHOT_SUFFIX, new EMFSnapshotSerializer());
-        factory.configureJournalSerializer(JOURNAL_SUFFIX, new EMFJournalSerializer());
         factory.configurePrevalenceDirectory(persistenceDir);
         try {
 			prevayler = factory.create();
@@ -48,21 +44,12 @@ public class EmfPersister {
         }
 	}
 	
-	public Prevayler getPrevayler() {
-		return prevayler;
-	}
-	
 	public Resource getPersistentSystemRoot() {
 		return data;
 	}
 	
-	public EList<? extends EObject> getContents() {
-		return data.getContents();
-	}
-	
-	public void checkpoint() throws IOException {
+	public void snapshot() throws IOException {
 		prevayler.takeSnapshot();
-		cleanupJournalFiles();
 	}
 	
 	public void close() {

@@ -83,7 +83,7 @@ public class ResourceProxy implements Resource {
 
 	@Override
 	public EList<EObject> getContents() {
-		return EListProxy.wrap(delegate.getContents(), prevayler);
+		return EListResourceContentsProxy.wrap(delegate.getContents(), prevayler, delegate);
 	}
 
 	@Override

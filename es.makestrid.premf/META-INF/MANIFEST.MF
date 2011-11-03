@@ -11,7 +11,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.change,
  org.eclipse.emf.ecore.xmi,
- org.prevayler
+ org.prevayler,
+ org.eclipse.core.resources;bundle-version="3.7.100"
 Bundle-ActivationPolicy: lazy
 Export-Package: es.makestrid.premf,
  es.makestrid.premf.proxies

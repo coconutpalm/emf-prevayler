@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmi:id="_wdpu4QWGEeGE0vpymyb8Wg" type="EcoreTools" name="TestData" measurementUnit="Pixel">
+  <children xmi:type="notation:Node" xmi:id="_ZW71gAWHEeGE0vpymyb8Wg" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_ZW-RwAWHEeGE0vpymyb8Wg" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_ZW_f4AWHEeGE0vpymyb8Wg" type="5001">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_ZW_f4QWHEeGE0vpymyb8Wg"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_ZW_f4gWHEeGE0vpymyb8Wg"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_ZW_f4wWHEeGE0vpymyb8Wg"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_ZXAG8AWHEeGE0vpymyb8Wg" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_ZXAG8QWHEeGE0vpymyb8Wg"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_ZXAG8gWHEeGE0vpymyb8Wg"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_ZXAG8wWHEeGE0vpymyb8Wg"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_ZW71gQWHEeGE0vpymyb8Wg" fontColor="4210752" fontName="Liberation Sans" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EClass" href="TestData.ecore#//Root"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ZW71ggWHEeGE0vpymyb8Wg" x="143" y="64"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_bKrrEAWHEeGE0vpymyb8Wg" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_bKsSIAWHEeGE0vpymyb8Wg" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_bKs5MAWHEeGE0vpymyb8Wg" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_uvjY4AWHEeGE0vpymyb8Wg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="TestData.ecore#//Person/firstName"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_uvjY4QWHEeGE0vpymyb8Wg"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_vxwcwAWHEeGE0vpymyb8Wg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="TestData.ecore#//Person/lastName"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_vxwcwQWHEeGE0vpymyb8Wg"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_bKs5MQWHEeGE0vpymyb8Wg"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_bKs5MgWHEeGE0vpymyb8Wg"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_bKs5MwWHEeGE0vpymyb8Wg"/>
+      <layoutConstraint xmi:type="notation:Ratio" xmi:id="_b00NMAWHEeGE0vpymyb8Wg" value="0.3"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_bKs5NAWHEeGE0vpymyb8Wg" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_bKs5NQWHEeGE0vpymyb8Wg"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_bKs5NgWHEeGE0vpymyb8Wg"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_bKtgQAWHEeGE0vpymyb8Wg"/>
+      <layoutConstraint xmi:type="notation:Ratio" xmi:id="_b000QAWHEeGE0vpymyb8Wg" value="0.3"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_bKrrEQWHEeGE0vpymyb8Wg" fontColor="4210752" fontName="Liberation Sans" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EClass" href="TestData.ecore#//Person"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_bKrrEgWHEeGE0vpymyb8Wg" x="120" y="180"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_wdqV8AWGEeGE0vpymyb8Wg"/>
+  <element xmi:type="ecore:EPackage" href="TestData.ecore#/"/>
+  <edges xmi:type="notation:Edge" xmi:id="_lPUYwAWHEeGE0vpymyb8Wg" type="3002" source="_ZW71gAWHEeGE0vpymyb8Wg" target="_bKrrEAWHEeGE0vpymyb8Wg">
+    <children xmi:type="notation:Node" xmi:id="_lPVm4AWHEeGE0vpymyb8Wg" type="4011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_lPVm4QWHEeGE0vpymyb8Wg" x="-10" y="-10"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_lPWN8AWHEeGE0vpymyb8Wg" type="4012">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_lPWN8QWHEeGE0vpymyb8Wg" x="-5" y="28"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_lPUYwQWHEeGE0vpymyb8Wg" lineColor="4210752"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_lPUYwgWHEeGE0vpymyb8Wg" fontColor="4210752" fontName="Liberation Sans" fontHeight="10"/>
+    <element xmi:type="ecore:EReference" href="TestData.ecore#//Root/People"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_lPUYwwWHEeGE0vpymyb8Wg" points="[-6, 24, -7, -89]$[-6, 133, -7, 20]"/>
+  </edges>
+</notation:Diagram>
