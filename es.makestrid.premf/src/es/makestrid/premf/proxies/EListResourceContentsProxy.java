@@ -38,6 +38,8 @@ public class EListResourceContentsProxy<T> extends EListProxy<T> {
 		}
 		return toRetain;
 	}
+	
+	private static final String URI_NOT_CONTAINED = "/-1";
 
 	public EListResourceContentsProxy(EList<T> delegate, Prevayler prevayler,
 			Resource root) {
@@ -202,10 +204,40 @@ public class EListResourceContentsProxy<T> extends EListProxy<T> {
 		getPrevayler().execute(transaction);
 	}
 
+	private static class Set<T> implements SureTransactionWithQuery {
+		private static final long serialVersionUID = -7201499776541734978L;
+		private int index;
+		private transient T element;
+		private String uriFragment = null;
+		private String serializedElement = null;
+
+		public Set(int index, T element, Resource resource) {
+			this.index = index;
+			this.element = element;
+			this.uriFragment = resource.getURIFragment((EObject) element);
+			if (URI_NOT_CONTAINED.equals(this.uriFragment)) {
+				this.serializedElement = serialize((EObject)element);
+			}
+		}
+		@Override
+		public Object executeAndQuery(Object prevalentSystem, Date executionTime) {
+			Resource root = (Resource) prevalentSystem;
+			// FIXME: TDD these two cases
+//			if (null == element) {
+//				if (URI_NOT_CONTAINED.equals(this.uriFragment)) {
+//					element = (T) deserialize(serializedElement);
+//				} else {
+//					element = (T) root.getEObject(uriFragment);
+//				}
+//			}
+			return root.getContents().set(index, (EObject)element);
+		}
+	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public T set(int index, T element) {
-		// TODO Auto-generated method stub
-		return null;
+		SureTransactionWithQuery transaction = new Set<T>(index, element, getResource());
+		return (T) getPrevayler().execute(transaction);
 	}
 
 	@Override
