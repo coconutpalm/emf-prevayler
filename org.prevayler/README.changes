@@ -1,0 +1,3 @@
+Capsule.java now caches the Transaction and doesn't bother to deserialize it if it already
+has a copy (i.e.: The first time it runs in the live system).
+

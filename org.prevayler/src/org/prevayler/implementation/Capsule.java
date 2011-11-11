@@ -9,10 +9,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 public abstract class Capsule implements Serializable {
-
+	private static final long serialVersionUID = 1L;
+	private transient Object transaction;
 	private final byte[] _serialized;
 
 	protected Capsule(Object transaction, Serializer journalSerializer) {
+		this.transaction = transaction;
 		try {
 			ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 			journalSerializer.writeObject(bytes, transaction);
@@ -49,7 +51,9 @@ public abstract class Capsule implements Serializable {
 	 * while running the transaction but after deserializing it.
 	 */
 	public void executeOn(Object prevalentSystem, Date executionTime, Serializer journalSerializer) {
-		Object transaction = deserialize(journalSerializer);
+		if (null == transaction) {
+			transaction = deserialize(journalSerializer);
+		}
 
 		synchronized (prevalentSystem) {
 			justExecute(transaction, prevalentSystem, executionTime);

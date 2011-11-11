@@ -120,8 +120,11 @@ public class EListResourceContentsProxyTest extends TestCase {
 
 	public void testRetainAll() throws Exception {
 		Person person0 = factory.createPerson();
+		person0.setFirstName("0");
 		Person person1 = factory.createPerson();
+		person1.setFirstName("1");
 		Person person2 = factory.createPerson();
+		person2.setFirstName("2");
 		
 		Collection<Person> people = new LinkedList<Person>();
 		Collections.addAll(people, new Person[] {
@@ -137,10 +140,30 @@ public class EListResourceContentsProxyTest extends TestCase {
 		boolean result = testee.retainAll(peopleToRetain);
 
 		assertTrue("Reported success", result);
-		assertEquals("Prevayler ran add transaction", 2, prevayler.sureTransactionWithQueries.size());
+		assertEquals("Prevayler ran transaction", 2, prevayler.sureTransactionWithQueries.size());
 		assertTrue("List contains new object 0", testee.contains(person0));
 		assertFalse("List not contains new object 1", testee.contains(person1));
 		assertTrue("List contains new object 2", testee.contains(person2));
 		assertEquals("List size", 2, testee.size());
+	}
+	
+	public void testClear() throws Exception {
+		Person person0 = factory.createPerson();
+		person0.setFirstName("0");
+		Person person1 = factory.createPerson();
+		person1.setFirstName("1");
+		Person person2 = factory.createPerson();
+		person2.setFirstName("2");
+		
+		Collection<Person> people = new LinkedList<Person>();
+		Collections.addAll(people, new Person[] {
+				person0, person1, person2
+		});
+		testee.addAll(people);
+		
+		testee.clear();
+		
+		assertEquals("Prevayler ran transaction", 2, prevayler.sureTransactionWithQueries.size());
+		assertEquals("List size", 0, testee.size());
 	}
 }

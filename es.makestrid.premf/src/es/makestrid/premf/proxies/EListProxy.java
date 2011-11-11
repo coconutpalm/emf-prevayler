@@ -9,7 +9,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.prevayler.Prevayler;
 
-public abstract class EListProxy<T> implements EList<T> {
+public abstract class EListProxy<T> implements EList<T>, Iterable<T> {
 	
 	private Resource resource;
 	private EList<T> delegate;
