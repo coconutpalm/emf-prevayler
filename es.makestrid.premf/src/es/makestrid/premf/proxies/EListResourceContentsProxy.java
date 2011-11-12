@@ -1,6 +1,5 @@
 package es.makestrid.premf.proxies;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
@@ -8,12 +7,8 @@ import java.util.LinkedList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.prevayler.Prevayler;
 import org.prevayler.SureTransactionWithQuery;
-
-import static es.makestrid.premf.internal.EcoreHelper.serialize;
-import static es.makestrid.premf.internal.EcoreHelper.deserialize;
 
 public class EListResourceContentsProxy<T> extends EListProxy<T> {
 
@@ -39,8 +34,6 @@ public class EListResourceContentsProxy<T> extends EListProxy<T> {
 		return toRetain;
 	}
 	
-	private static final String URI_NOT_CONTAINED = "/-1";
-
 	public EListResourceContentsProxy(EList<T> delegate, Prevayler prevayler,
 			Resource root) {
 		super(delegate, prevayler, root);
@@ -49,18 +42,18 @@ public class EListResourceContentsProxy<T> extends EListProxy<T> {
 	private static class Add implements SureTransactionWithQuery {
 		private static final long serialVersionUID = -8239859788533098090L;
 		private transient EObject toAdd;
-		private String toAddSerialized;
+		private SerializedEMFObject toAddSerialized;
 		
-		public Add(EObject toAdd) {
+		public Add(EObject toAdd, Resource resource) {
 			this.toAdd = toAdd;
-			toAddSerialized = serialize(toAdd);
+			toAddSerialized = new SerializedEMFObject(toAdd, resource);
 		}
 		
 		@Override
 		public Object executeAndQuery(Object prevalentSystem, Date executionTime) {
 			Resource system = (Resource) prevalentSystem;
 			if (null == toAdd) {
-				toAdd = deserialize(toAddSerialized);
+				toAdd = toAddSerialized.get(system);
 			}
 			return system.getContents().add(toAdd);
 		}
@@ -68,18 +61,18 @@ public class EListResourceContentsProxy<T> extends EListProxy<T> {
 	@Override
 	public boolean add(T object) {
 		EObject toAdd = (EObject) object;
-		return (Boolean) getPrevayler().execute(new Add(toAdd));
+		return (Boolean) getPrevayler().execute(new Add(toAdd, getResource()));
 	}
 
 	private static class AddAll implements SureTransactionWithQuery {
 		private static final long serialVersionUID = -8239859788533098090L;
 		private transient Collection<EObject> toAdd;
-		private LinkedList<String> toAddSerialized = new LinkedList<String>();
+		private LinkedList<SerializedEMFObject> toAddSerialized = new LinkedList<SerializedEMFObject>();
 		
-		public AddAll(Collection<EObject> toAdd) {
+		public AddAll(Collection<EObject> toAdd, Resource resource) {
 			this.toAdd = toAdd;
 			for (EObject obj : toAdd) {
-				String serializedObj = serialize(obj);
+				SerializedEMFObject serializedObj = new SerializedEMFObject(obj, resource);
 				toAddSerialized.add(serializedObj);
 			}
 		}
@@ -89,8 +82,8 @@ public class EListResourceContentsProxy<T> extends EListProxy<T> {
 			Resource system = (Resource) prevalentSystem;
 			if (null == toAdd) {
 				toAdd = new LinkedList<EObject>();
-				for (String serializedObj : toAddSerialized) {
-					EObject obj = deserialize(serializedObj);
+				for (SerializedEMFObject serializedObj : toAddSerialized) {
+					EObject obj = serializedObj.get(system);
 					toAdd.add(obj);
 				}
 			}
@@ -101,22 +94,22 @@ public class EListResourceContentsProxy<T> extends EListProxy<T> {
 	public boolean addAll(Collection<? extends T> c) {
 		@SuppressWarnings("unchecked")
 		final Collection<EObject> collection = (Collection<EObject>) c;
-		SureTransactionWithQuery transaction = new AddAll(collection);
+		SureTransactionWithQuery transaction = new AddAll(collection, getResource());
 		return (Boolean) getPrevayler().execute(transaction);
 	}
 
 	private static class AddAllAtIndex implements SureTransactionWithQuery {
 		private static final long serialVersionUID = -8239859788533098090L;
 		private transient Collection<EObject> toAdd;
-		private LinkedList<String> toAddSerialized = new LinkedList<String>();
+		private LinkedList<SerializedEMFObject> toAddSerialized = new LinkedList<SerializedEMFObject>();
 		private int index;
 		
-		public AddAllAtIndex(int index, Collection<EObject> toAdd) {
+		public AddAllAtIndex(int index, Collection<EObject> toAdd, Resource resource) {
 			this.index = index;
 			this.toAdd = toAdd;
 			for (EObject obj : toAdd) {
-				String serializedObj = serialize(obj);
-				toAddSerialized.add(serializedObj);
+				SerializedEMFObject serialized = new SerializedEMFObject(obj, resource);
+				toAddSerialized.add(serialized);
 			}
 		}
 		
@@ -125,8 +118,8 @@ public class EListResourceContentsProxy<T> extends EListProxy<T> {
 			Resource system = (Resource) prevalentSystem;
 			if (null == toAdd) {
 				toAdd = new LinkedList<EObject>();
-				for (String serializedObj : toAddSerialized) {
-					EObject obj = deserialize(serializedObj);
+				for (SerializedEMFObject serializedObj : toAddSerialized) {
+					EObject obj = serializedObj.get(system);
 					toAdd.add(obj);
 				}
 			}
@@ -137,7 +130,7 @@ public class EListResourceContentsProxy<T> extends EListProxy<T> {
 	public boolean addAll(int index, Collection<? extends T> c) {
 		@SuppressWarnings("unchecked")
 		final Collection<EObject> collection = (Collection<EObject>) c;
-		SureTransactionWithQuery transaction = new AddAllAtIndex(index, collection);
+		SureTransactionWithQuery transaction = new AddAllAtIndex(index, collection, getResource());
 		return (Boolean) getPrevayler().execute(transaction);
 	}
 
@@ -203,33 +196,25 @@ public class EListResourceContentsProxy<T> extends EListProxy<T> {
 		SureTransactionWithQuery transaction = new Clear();
 		getPrevayler().execute(transaction);
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	private static class Set<T> implements SureTransactionWithQuery {
 		private static final long serialVersionUID = -7201499776541734978L;
 		private int index;
 		private transient T element;
-		private String uriFragment = null;
-		private String serializedElement = null;
+		private SerializedEMFObject serializedObject;
 
 		public Set(int index, T element, Resource resource) {
 			this.index = index;
 			this.element = element;
-			this.uriFragment = resource.getURIFragment((EObject) element);
-			if (URI_NOT_CONTAINED.equals(this.uriFragment)) {
-				this.serializedElement = serialize((EObject)element);
-			}
+			this.serializedObject = new SerializedEMFObject((EObject)element, resource);
 		}
 		@Override
 		public Object executeAndQuery(Object prevalentSystem, Date executionTime) {
 			Resource root = (Resource) prevalentSystem;
-			// FIXME: TDD these two cases
-//			if (null == element) {
-//				if (URI_NOT_CONTAINED.equals(this.uriFragment)) {
-//					element = (T) deserialize(serializedElement);
-//				} else {
-//					element = (T) root.getEObject(uriFragment);
-//				}
-//			}
+			if (null == element) {
+				element = (T) serializedObject.get(root);
+			}
 			return root.getContents().set(index, (EObject)element);
 		}
 	}
