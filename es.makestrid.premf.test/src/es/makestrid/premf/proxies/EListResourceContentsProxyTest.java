@@ -188,4 +188,49 @@ public class EListResourceContentsProxyTest extends TestCase {
 		assertEquals(person0, oldPerson);
 		assertEquals(person1, testee.get(0));
 	}
+
+	public void testAddAtIndex() throws Exception {
+		Person person0 = factory.createPerson();
+		Person person1 = factory.createPerson();
+		Person person2 = factory.createPerson();
+		
+		Collection<Person> people = new LinkedList<Person>();
+		Collections.addAll(people, new Person[] {
+				person0, person1, person2
+		});
+		testee.addAll(people);
+		
+		Person person3 = factory.createPerson();
+		
+		testee.add(1, person3);
+		assertEquals(person0, testee.get(0));
+		assertEquals(person3, testee.get(1));
+		assertEquals(person1, testee.get(2));
+		assertEquals(person2, testee.get(3));
+		assertEquals("Prevayler ran add transaction", 2, prevayler.sureTransactionWithQueries.size());
+	}
+
+	// NOTE: testRemove(index): Not needed because there is no behavior difference
+	// between the first time and when replaying the log, and we tested
+	// it in EmfPersisterTest
+	
+	public void testRemoveObject() throws Exception {
+		Person person0 = factory.createPerson();
+		Person person1 = factory.createPerson();
+		Person person2 = factory.createPerson();
+		
+		Collection<Person> people = new LinkedList<Person>();
+		Collections.addAll(people, new Person[] {
+				person0, person1, person2
+		});
+		testee.addAll(people);
+		
+		boolean result = testee.remove(person1);
+		
+		assertTrue(result);
+		assertEquals(2, testee.size());
+		assertEquals(person0, testee.get(0));
+		assertEquals(person2, testee.get(1));
+		assertEquals("Prevayler ran add transaction", 2, prevayler.sureTransactionWithQueries.size());
+	}
 }

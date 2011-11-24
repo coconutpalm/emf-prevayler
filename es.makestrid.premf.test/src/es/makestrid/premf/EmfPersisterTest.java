@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 import junit.framework.TestCase;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
@@ -164,4 +165,57 @@ public class EmfPersisterTest extends TestCase {
 		
 		assertEquals(0, secondSystem.getContents().size());
 	}
+	
+	public void testAddAtIndex() throws Exception {
+		String tempDirPath = tempDir().getAbsolutePath();
+		Resource system = makePersistentSystem(tempDirPath);
+		
+		Person[] people = new Person[] {
+				factory.createPerson(), factory.createPerson()
+		};
+		people[0].setFirstName("Herkimer");
+		people[1].setFirstName("Jerkimer");
+		LinkedList<Person> peopleToStore = new LinkedList<Person>();
+		Collections.addAll(peopleToStore, people);
+
+		system.getContents().addAll(peopleToStore);
+
+		Person extra1 = factory.createPerson();
+		extra1.setFirstName("Extra! Extra!");
+		
+		system.getContents().add(1, extra1);
+
+		Resource secondSystem = makePersistentSystem(tempDirPath);
+		
+		assertEquals(3, secondSystem.getContents().size());
+		Person p0 = (Person) secondSystem.getContents().get(0);
+		Person p1 = (Person) secondSystem.getContents().get(1);
+		Person p2 = (Person) secondSystem.getContents().get(2);
+		assertEquals("Herkimer", p0.getFirstName());
+		assertEquals("Extra! Extra!", p1.getFirstName());
+		assertEquals("Jerkimer", p2.getFirstName());
+	}
+	
+	public void testRemove() throws Exception {
+		String tempDirPath = tempDir().getAbsolutePath();
+		Resource system = makePersistentSystem(tempDirPath);
+
+		Person p0 = factory.createPerson();
+		p0.setFirstName("Herkimer");
+		Person p1 = factory.createPerson();
+		p1.setFirstName("Jerkimer");
+		system.getContents().add(p0);
+		system.getContents().add(p1);
+		
+		system.getContents().remove(0);
+		assertEquals(1, system.getContents().size());
+
+		Resource secondSystem = makePersistentSystem(tempDirPath);
+		
+		assertEquals(1, secondSystem.getContents().size());
+		Person result = (Person) secondSystem.getContents().get(0);
+		assertEquals("Jerkimer", result.getFirstName());
+	}
+
+
 }

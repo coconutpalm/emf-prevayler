@@ -225,22 +225,75 @@ public class EListResourceContentsProxy<T> extends EListProxy<T> {
 		return (T) getPrevayler().execute(transaction);
 	}
 
+	private static class AddAtIndex<T> implements SureTransactionWithQuery {
+		private static final long serialVersionUID = 4823835952393734212L;
+		private int index;
+		private transient T element;
+		private SerializedEMFObject serializedObject;
+		
+		public AddAtIndex(int index, T element, Resource resource) {
+			this.index = index;
+			this.element = element;
+			this.serializedObject = new SerializedEMFObject((EObject)element, resource);
+		}
+		@Override
+		public Object executeAndQuery(Object prevalentSystem, Date executionTime) {
+			Resource root = (Resource) prevalentSystem;
+			if (null == element) {
+				element = (T) serializedObject.get(root);
+			}
+			root.getContents().add(index, (EObject) element);
+			return null;
+		}
+	}
 	@Override
 	public void add(int index, T element) {
-		// TODO Auto-generated method stub
-		
+		SureTransactionWithQuery transaction = new AddAtIndex<T>(index, element, getResource());
+		getPrevayler().execute(transaction);
 	}
 
+	private static class Remove implements SureTransactionWithQuery {
+		private static final long serialVersionUID = 1L;
+		private int index;
+		
+		public Remove(int index) {
+			this.index = index;
+		}
+		@Override
+		public Object executeAndQuery(Object prevalentSystem, Date executionTime) {
+			Resource root = (Resource) prevalentSystem;
+			return root.getContents().remove(index);
+		}
+	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public T remove(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		SureTransactionWithQuery transaction = new Remove(index);
+		return (T) getPrevayler().execute(transaction);
 	}
 
+	private static class RemoveObject implements SureTransactionWithQuery {
+		private static final long serialVersionUID = 1L;
+		private transient Object element;
+		private SerializedEMFObject serializedObject;
+		
+		public RemoveObject(Object o, Resource resource) {
+			this.element = o;
+			this.serializedObject = new SerializedEMFObject((EObject)element, resource);
+		}
+		@Override
+		public Object executeAndQuery(Object prevalentSystem, Date executionTime) {
+			Resource root = (Resource) prevalentSystem;
+			if (null == element) {
+				element = serializedObject.get(root);
+			}
+			return root.getContents().remove(element);
+		}
+	}
 	@Override
 	public boolean remove(Object o) {
-		//TODO
-		throw new UnsupportedOperationException();
+		SureTransactionWithQuery transaction = new RemoveObject(o, getResource());
+		return (Boolean) getPrevayler().execute(transaction);
 	}
 
 	@Override

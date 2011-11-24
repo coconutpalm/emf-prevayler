@@ -15,18 +15,18 @@ public class SerializedEMFObject implements Serializable {
 	private String uriFragment = null;
 	private String serializedObject = null;
 
-	public SerializedEMFObject(EObject object, Resource resource) {
-		this.uriFragment = resource.getURIFragment((EObject) object);
+	public SerializedEMFObject(EObject object, Resource sourceResource) {
+		this.uriFragment = sourceResource.getURIFragment((EObject) object);
 		if (URI_NOT_CONTAINED.equals(this.uriFragment)) {
 			this.serializedObject = serialize((EObject)object);
 		}
 	}
 	
-	public EObject get(Resource resource) {
+	public EObject get(Resource targetResource) {
 		if (URI_NOT_CONTAINED.equals(this.uriFragment)) {
 			return deserialize(serializedObject);
 		} else {
-			return resource.getEObject(uriFragment);
+			return targetResource.getEObject(uriFragment);
 		}
 	}
 }
