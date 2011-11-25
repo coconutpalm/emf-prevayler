@@ -236,6 +236,7 @@ public class EListResourceContentsProxy<T> extends EListProxy<T> {
 			this.element = element;
 			this.serializedObject = new SerializedEMFObject((EObject)element, resource);
 		}
+		@SuppressWarnings("unchecked")
 		@Override
 		public Object executeAndQuery(Object prevalentSystem, Date executionTime) {
 			Resource root = (Resource) prevalentSystem;

@@ -69,11 +69,10 @@ public abstract class EListProxy<T> implements EList<T>, Iterable<T> {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public Object[] toArray(Object[] result) {
-		//FIXME
+    public <T2> T2[] toArray(T2[] result) {
 		Iterator<T> contents = delegate.iterator();
 		for (int i = 0; i < result.length; i++) {
-			result[i] = (T) ObjectProxy.wrap(contents.next(), prevayler);
+			result[i] = (T2) ObjectProxy.wrap(contents.next(), prevayler);
 		}
 		return result;
 	}

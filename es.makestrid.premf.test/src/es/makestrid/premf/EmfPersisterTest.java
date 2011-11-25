@@ -42,7 +42,7 @@ public class EmfPersisterTest extends TestCase {
 		return persistentSystem;
 	}
 	
-	public void testSaveAndRestoreOnePerson() throws Exception {
+	public void testAdd() throws Exception {
 		String tempDirPath = tempDir().getAbsolutePath();
 
 		// Create a Resource and make it persistent
