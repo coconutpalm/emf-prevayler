@@ -297,16 +297,53 @@ public class EListResourceContentsProxy<T> extends EListProxy<T> {
 		return (Boolean) getPrevayler().execute(transaction);
 	}
 
+	private static class MoveObject implements SureTransactionWithQuery {
+		private static final long serialVersionUID = -6809203065064968216L;
+		private int newPosition;
+		private transient Object element;
+		private SerializedEMFObject serializedObject;
+		
+		public MoveObject(int newPosition, Object object, Resource resource) {
+			this.newPosition = newPosition;
+			this.element = object;
+			this.serializedObject = new SerializedEMFObject((EObject) object, resource);
+		}
+		@Override
+		public Object executeAndQuery(Object prevalentSystem, Date executionTime) {
+			Resource root = (Resource) prevalentSystem;
+			if (null == element) {
+				element = serializedObject.get(root);
+			}
+			root.getContents().move(newPosition, (EObject) element);
+			return null;
+		}
+	}
 	@Override
 	public void move(int newPosition, T object) {
-		// TODO Auto-generated method stub
-		
+		SureTransactionWithQuery transaction = new MoveObject(newPosition, object, getResource());
+		getPrevayler().execute(transaction);
 	}
 
+	private static class MoveFromIndex implements SureTransactionWithQuery {
+		private static final long serialVersionUID = 452028282408998342L;
+		private int newPosition;
+		private int oldPosition;
+		
+		public MoveFromIndex(int newPosition, int oldPosition) {
+			this.newPosition = newPosition;
+			this.oldPosition = oldPosition;
+		}
+		@Override
+		public Object executeAndQuery(Object prevalentSystem, Date executionTime) {
+			Resource root = (Resource) prevalentSystem;
+			return root.getContents().move(newPosition, oldPosition);
+		}
+	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public T move(int newPosition, int oldPosition) {
-		// TODO Auto-generated method stub
-		return null;
+		SureTransactionWithQuery transaction = new MoveFromIndex(newPosition, oldPosition);
+		return (T) getPrevayler().execute(transaction);
 	}
 
 }

@@ -6,7 +6,6 @@ import java.util.LinkedList;
 
 import junit.framework.TestCase;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
@@ -31,9 +30,23 @@ public class EmfPersisterTest extends TestCase {
 		String randomTempDir = tmpDir + File.separatorChar + "test." + System.currentTimeMillis();
 		File result = new File(randomTempDir);
 		result.mkdirs();
+		result.deleteOnExit();
 		return result;
 	}
 
+	private LinkedList<Person> people(String... firstNames) {
+		LinkedList<Person> peopleToStore;
+		Person[] people = new Person[firstNames.length];
+		int i = 0;
+		for (String name : firstNames) {
+			people[i] = factory.createPerson();
+			people[i].setFirstName(name);
+			++i;
+		}
+		peopleToStore = new LinkedList<Person>();
+		Collections.addAll(peopleToStore, people);
+		return peopleToStore;
+	}
 	
 	private Resource makePersistentSystem(String tempDirPath) {
 		Resource newSystem = new XMIResourceImpl();
@@ -71,14 +84,7 @@ public class EmfPersisterTest extends TestCase {
 		String tempDirPath = tempDir().getAbsolutePath();
 		Resource system = makePersistentSystem(tempDirPath);
 		
-		Person[] people = new Person[] {
-				factory.createPerson(), factory.createPerson()
-		};
-		people[0].setFirstName("Herkimer");
-		people[1].setFirstName("Jerkimer");
-		LinkedList<Person> peopleToStore = new LinkedList<Person>();
-		Collections.addAll(peopleToStore, people);
-		
+		LinkedList<Person> peopleToStore = people("Herkimer", "Jerkimer");
 		system.getContents().addAll(peopleToStore);
 		
 		Resource secondSystem = makePersistentSystem(tempDirPath);
@@ -94,18 +100,11 @@ public class EmfPersisterTest extends TestCase {
 		String tempDirPath = tempDir().getAbsolutePath();
 		Resource system = makePersistentSystem(tempDirPath);
 		
-		Person[] people = new Person[] {
-				factory.createPerson(), factory.createPerson()
-		};
-		people[0].setFirstName("Herkimer");
-		people[1].setFirstName("Jerkimer");
-		LinkedList<Person> peopleToStore = new LinkedList<Person>();
-		Collections.addAll(peopleToStore, people);
-		
+		LinkedList<Person> peopleToStore = people("Herkimer", "Jerkimer");
 		system.getContents().addAll(peopleToStore);
 		
 		LinkedList<Person> peopleToRemove = new LinkedList<Person>();
-		peopleToRemove.add(people[1]);
+		peopleToRemove.add(peopleToStore.get(1));
 		system.getContents().removeAll(peopleToRemove);
 
 		assertEquals(1, system.getContents().size());
@@ -122,18 +121,11 @@ public class EmfPersisterTest extends TestCase {
 		String tempDirPath = tempDir().getAbsolutePath();
 		Resource system = makePersistentSystem(tempDirPath);
 		
-		Person[] people = new Person[] {
-				factory.createPerson(), factory.createPerson()
-		};
-		people[0].setFirstName("Herkimer");
-		people[1].setFirstName("Jerkimer");
-		LinkedList<Person> peopleToStore = new LinkedList<Person>();
-		Collections.addAll(peopleToStore, people);
-		
+		LinkedList<Person> peopleToStore = people("Herkimer", "Jerkimer");
 		system.getContents().addAll(peopleToStore);
 		
 		LinkedList<Person> peopleToRetain = new LinkedList<Person>();
-		peopleToRetain.add(people[1]);
+		peopleToRetain.add(peopleToStore.get(1));
 		system.getContents().retainAll(peopleToRetain);
 
 		assertEquals(1, system.getContents().size());
@@ -150,15 +142,9 @@ public class EmfPersisterTest extends TestCase {
 		String tempDirPath = tempDir().getAbsolutePath();
 		Resource system = makePersistentSystem(tempDirPath);
 		
-		Person[] people = new Person[] {
-				factory.createPerson(), factory.createPerson()
-		};
-		people[0].setFirstName("Herkimer");
-		people[1].setFirstName("Jerkimer");
-		LinkedList<Person> peopleToStore = new LinkedList<Person>();
-		Collections.addAll(peopleToStore, people);
-
+		LinkedList<Person> peopleToStore = people("Herkimer", "Jerkimer");
 		system.getContents().addAll(peopleToStore);
+		
 		system.getContents().clear();
 
 		Resource secondSystem = makePersistentSystem(tempDirPath);
@@ -170,14 +156,7 @@ public class EmfPersisterTest extends TestCase {
 		String tempDirPath = tempDir().getAbsolutePath();
 		Resource system = makePersistentSystem(tempDirPath);
 		
-		Person[] people = new Person[] {
-				factory.createPerson(), factory.createPerson()
-		};
-		people[0].setFirstName("Herkimer");
-		people[1].setFirstName("Jerkimer");
-		LinkedList<Person> peopleToStore = new LinkedList<Person>();
-		Collections.addAll(peopleToStore, people);
-
+		LinkedList<Person> peopleToStore = people("Herkimer", "Jerkimer");
 		system.getContents().addAll(peopleToStore);
 
 		Person extra1 = factory.createPerson();
@@ -200,12 +179,8 @@ public class EmfPersisterTest extends TestCase {
 		String tempDirPath = tempDir().getAbsolutePath();
 		Resource system = makePersistentSystem(tempDirPath);
 
-		Person p0 = factory.createPerson();
-		p0.setFirstName("Herkimer");
-		Person p1 = factory.createPerson();
-		p1.setFirstName("Jerkimer");
-		system.getContents().add(p0);
-		system.getContents().add(p1);
+		LinkedList<Person> peopleToStore = people("Herkimer", "Jerkimer");
+		system.getContents().addAll(peopleToStore);
 		
 		system.getContents().remove(0);
 		assertEquals(1, system.getContents().size());
@@ -217,5 +192,41 @@ public class EmfPersisterTest extends TestCase {
 		assertEquals("Jerkimer", result.getFirstName());
 	}
 
+	public void testMoveObject() throws Exception {
+		String tempDirPath = tempDir().getAbsolutePath();
+		Resource system = makePersistentSystem(tempDirPath);
+
+		LinkedList<Person> peopleToStore = people("Herkimer", "Jerkimer", "Yerkimer");
+		system.getContents().addAll(peopleToStore);
+		
+		Person personToMove = peopleToStore.get(2);
+		system.getContents().move(0, personToMove);
+		
+		assertEquals(personToMove, system.getContents().get(0));
+		
+		Resource secondSystem = makePersistentSystem(tempDirPath);
+		
+		Person result = (Person) secondSystem.getContents().get(0);
+		assertEquals("Yerkimer", result.getFirstName());
+	}
+
+	public void testMoveFromIndex() throws Exception {
+		String tempDirPath = tempDir().getAbsolutePath();
+		Resource system = makePersistentSystem(tempDirPath);
+
+		LinkedList<Person> peopleToStore = people("Herkimer", "Jerkimer", "Yerkimer");
+		system.getContents().addAll(peopleToStore);
+		
+		int MOVE_INDEX=2;
+		Person personToMove = peopleToStore.get(MOVE_INDEX);
+		system.getContents().move(0, MOVE_INDEX);
+		
+		assertEquals(personToMove, system.getContents().get(0));
+		
+		Resource secondSystem = makePersistentSystem(tempDirPath);
+		
+		Person result = (Person) secondSystem.getContents().get(0);
+		assertEquals("Yerkimer", result.getFirstName());
+	}
 
 }
