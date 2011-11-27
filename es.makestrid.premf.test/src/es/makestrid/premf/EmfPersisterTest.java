@@ -228,5 +228,23 @@ public class EmfPersisterTest extends TestCase {
 		Person result = (Person) secondSystem.getContents().get(0);
 		assertEquals("Yerkimer", result.getFirstName());
 	}
+	
+	public void testObjectMethodInvoke() throws Exception {
+		String tempDirPath = tempDir().getAbsolutePath();
+		Resource system = makePersistentSystem(tempDirPath);
+
+		LinkedList<Person> peopleToStore = people("Herkimer", "Jerkimer");
+		system.getContents().addAll(peopleToStore);
+		
+		Person person = (Person) system.getContents().get(1);
+		person.setFirstName("Yerkimer");
+		
+		assertEquals("Yerkimer", person.getFirstName());
+
+		Resource secondSystem = makePersistentSystem(tempDirPath);
+		
+		Person result = (Person) secondSystem.getContents().get(1);
+		assertEquals("Yerkimer", result.getFirstName());
+	}
 
 }
